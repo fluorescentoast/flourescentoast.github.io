@@ -6,11 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.107.0">
-  <link rel="canonical" href="https://fluorescentoast.github.io/post/tags/" />
+  <link rel="canonical" href="https://fluorescentoast.github.io/post/stack-overflow-question/" />
 
   
     
-    <meta name="description" content="Tags">
+    <meta name="description" content="And more importantly, answering my first (and probably last) stack overflow question. I had a bunch of videos (300&#43;) and I needed to change the ratio to 9:16, so I could upload them as youtube shorts. No problem I thought, trusty google will solve my problem. Boom. First result is the exact question I’m asking for.
+Damn. No answers. We’re going to have to tackle this on our own.
+We are going to be using python’s library Moviepy to solve our problem.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://fluorescentoast.github.io/post/apple-touch-icon.png">
@@ -56,7 +58,7 @@
 
   
   
-  <title>Tags | Blog</title>
+  <title>Answering Stackoverflow - Changing the Aspect Ratio of a Video, With Python | Blog</title>
 </head>
 
   <body>
@@ -195,7 +197,7 @@
       
       
       
-      <a href="/post/post/" >
+      <a href="/post/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -213,11 +215,59 @@
         <div>
           
   <main id="main">
-    <h1>Tags</h1>
-    <ul class="patterns-list">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use href="#bookmark"></use>
+      </svg>
+      Answering Stackoverflow - Changing the Aspect Ratio of a Video, With Python
+    </h1>
+
+    <div class="date">
       
-    </ul>
+      
+      <strong>Publish date: </strong>Dec 6, 2022
+      
+        
+      
+    </div>
+
+    
+
+    
+
+
+    <h3 id="and-more-importantly-answering-my-first-and-probably-last-stack-overflow-question">And more importantly, answering my first (and probably last) stack overflow question.</h3>
+<p>I had a bunch of videos (300+) and I needed to change the ratio to 9:16, so I could upload them as youtube shorts. No problem I thought, trusty google will solve my problem. Boom. First result is the exact question I&rsquo;m asking for.</p>
+<p><img src="https://i.ibb.co/gPhN2rz/image.png" alt="Question"></p>
+<p>Damn. No answers. We&rsquo;re going to have to tackle this on our own.</p>
+<p>We are going to be using python&rsquo;s library Moviepy to solve our problem. But first lets think about the problem at hand.</p>
+<p>We have a bunch of 16:9 videos that are 1920w by 1080h and I don&rsquo;t want to resize / compress the video. This means the maximum dimensions for the new 9:16 video can be 607.5w by 1080h.</p>
+<p>607.5 / 1080 = 0.5625 = 9:16</p>
+<p>You can&rsquo;t have half a px (607.5) for your new video&rsquo;s width, therefor to keep the ratio of 9:16 the next best dimensions are 576w by 1024h (my math could be wrong here).</p>
+<p>I can then take a cropped clip from the original video clip with those dimensions.</p>
+<p>What it looks like in code.</p>
+<pre tabindex="0"><code>import moviepy.editor as mp
+import moviepy.video.fx.all as vfx
+    
+# Create a temp video clip for this example
+temp_clip = mp.ColorClip(size=(1920, 1080), color=(0, 0, 255), duration=1)
+temp_clip.write_videofile(&#34;blue_original.mp4&#34;, fps=30) 
+
+# This is where you load in your original clip    
+clip_16_9 = mp.VideoFileClip(&#34;blue_original.mp4&#34;)
+    
+# Now lets crop out a 9:16 section from the original
+# x1=0, y1=0 will take the section from the top left corner
+clip_9_16 = vfx.crop(clip_16_9, x1=0, y1=0, width=576, height=1024)
+clip_9_16.write_videofile(&#34;new_clip.mp4&#34;)
+</code></pre><p>Not bad. Just several lines of code and now we have to basis code to adjust the ratio for any number of videos.</p>
+<p>Oh and I also answered the mentioned stackover flow question.</p>
+
   </main>
+  <div id="disqus-container">
+  
+</div>
+
 
           
             <footer role="contentinfo">

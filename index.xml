@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog</title>
-    <link>https://fluorescentoast.github.io/post/</link>
-    <description>Recent content on Blog</description>
+    <title>Welcome on Devlog</title>
+    <link>https://fluorescentoast.github.io/</link>
+    <description>Recent content in Welcome on Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Dec 2022 13:53:00 +1300</lastBuildDate><atom:link href="https://fluorescentoast.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Dec 2022 13:53:00 +1300</lastBuildDate><atom:link href="https://fluorescentoast.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Answering Stackoverflow - Changing the Aspect Ratio of a Video, With Python</title>
-      <link>https://fluorescentoast.github.io/post/stack-overflow-question/</link>
+      <link>https://fluorescentoast.github.io/stack-overflow-question/</link>
       <pubDate>Tue, 06 Dec 2022 13:53:00 +1300</pubDate>
       
-      <guid>https://fluorescentoast.github.io/post/stack-overflow-question/</guid>
+      <guid>https://fluorescentoast.github.io/stack-overflow-question/</guid>
       <description>And more importantly, answering my first (and probably last) stack overflow question. I had a bunch of videos (300+) and I needed to change the ratio to 9:16, so I could upload them as youtube shorts. No problem I thought, trusty google will solve my problem. Boom. First result is the exact question I&amp;rsquo;m asking for.
 Damn. No answers. We&amp;rsquo;re going to have to tackle this on our own.
 We are going to be using python&amp;rsquo;s library Moviepy to solve our problem.</description>

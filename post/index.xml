@@ -18,5 +18,17 @@ Damn. No answers. We&amp;rsquo;re going to have to tackle this on our own.
 We are going to be using python&amp;rsquo;s library Moviepy to solve our problem.</description>
     </item>
     
+    <item>
+      <title>Create a Marketplace Auction Sniper with Python</title>
+      <link>https://fluorescentoast.github.io/create-a-marketplace-auction-sniper/</link>
+      <pubDate>Tue, 02 Aug 2022 08:50:47 +1300</pubDate>
+      
+      <guid>https://fluorescentoast.github.io/create-a-marketplace-auction-sniper/</guid>
+      <description>Are you tired of missing out on the latest and greatest deals on online marketplaces? Fear not, for with a few lines of Python code, you can create a marketplace auction sniper that will keep you ahead of the curve!
+Overview This script is for tracking and sending notifications for new Apple laptop listings on a trading website.
+The script does the following steps repeatedly until interrupted:
+For each search string in the search_configuration dictionary, it performs a search request with given parameters: search_string, max_buy, number of rows, the canonical path, and page number.</description>
+    </item>
+    
   </channel>
 </rss>

@@ -6,10 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.110.0">
-  <link rel="canonical" href="https://fluorescentoast.github.io/" />
+  <link rel="canonical" href="https://fluorescentoast.github.io/create-a-marketplace-auction-sniper/" />
 
   
     
+    <meta name="description" content="Are you tired of missing out on the latest and greatest deals on online marketplaces? Fear not, for with a few lines of Python code, you can create a marketplace auction sniper that will keep you ahead of the curve!
+Overview This script is for tracking and sending notifications for new Apple laptop listings on a trading website.
+The script does the following steps repeatedly until interrupted:
+For each search string in the search_configuration dictionary, it performs a search request with given parameters: search_string, max_buy, number of rows, the canonical path, and page number.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://fluorescentoast.github.io/apple-touch-icon.png">
@@ -55,9 +59,7 @@
 
   
   
-    
-  
-  <title>Devlog</title>
+  <title>Create a Marketplace Auction Sniper with Python | Devlog</title>
 </head>
 
   <body>
@@ -209,7 +211,7 @@
       
       
       
-      <a href="/post/" >
+      <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -227,10 +229,188 @@
         <div>
           
   <main id="main">
-    <h1>Welcome</h1>
-    <p>A lot of a developers progress goes unnoticed. I intend to track mine here. Please check out my blog posts.</p>
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use href="#bookmark"></use>
+      </svg>
+      Create a Marketplace Auction Sniper with Python
+    </h1>
 
+    <div class="date">
+      
+      
+      <strong>Publish date: </strong>Aug 2, 2022
+      
+        
+      
+    </div>
+
+    
+
+    
+
+
+    <p>Are you tired of missing out on the latest and greatest deals on online marketplaces? Fear not, for with a few lines of Python code, you can create a marketplace auction sniper that will keep you ahead of the curve!</p>
+<p><img src="/images/sniperexample.jpg" alt="Example image"></p>
+<h4 id="overview">Overview</h4>
+<p>This script is for tracking and sending notifications for new Apple laptop listings on a trading website.</p>
+<p>The script does the following steps repeatedly until interrupted:</p>
+<ul>
+<li>For each search string in the search_configuration dictionary, it performs a search request with given parameters: search_string, max_buy, number of rows, the canonical path, and page number.</li>
+<li>It iterates over the received listings, and if the listing&rsquo;s start date is within the time frame since the last scan, and its ID is not in the sniped listings IDs, and the listing&rsquo;s buy now price is lower than or equal to max_buy, it sends a notification with the title, price, and link of the listing.</li>
+<li>It adds the listing&rsquo;s ID to the sniped_listings_ids list.</li>
+<li>The script updates the scan_previous_timestamp and cleans up the sniped_listings_ids list if it is too long.</li>
+<li>The script then waits for sleep_time (set to 3 minutes) and repeats the process.</li>
+<li>If an HTTP error occurs, a message is sent to the Telegram chat ID with the error text, and the script quits. The same happens for any other exception, with a generic error message.</li>
+</ul>
+<h4 id="the-code">The Code</h4>
+<pre tabindex="0"><code>from pprint import pprint
+from datetime import datetime, timedelta
+import re
+from time import sleep
+from numpy import array
+import requests
+import telegram
+import traceback
+from requests.exceptions import HTTPError
+
+telegram_token = &#34;&lt;your-telegram-token&gt;&#34;
+telegram_chat_id = your-chat-id
+base_link_url =&#34;https://www.reallypopularnzmarketplace.co.nz/a/marketplace&#34;
+url = &#39;https://api.reallypopularnzmarketplace.co.nz/v1/search/general.json&#39;
+apple_laptop_canonical = &#39;/marketplace/computers/laptops/laptops/apple&#39;
+telegram_bot = telegram.Bot(token=telegram_token)
+
+search_configuration = {
+    &#39;macbook pro 2016&#39;: 550,
+    &#39;macbook pro 2017&#39;: 550,
+    &#39;macbook pro 2018&#39;: 750,
+    &#39;macbook pro 2019&#39;: 1100,
+    &#39;macbook pro 2020&#39;: 1400,
+    &#39;macbook pro 2021&#39;: 1500,
+    &#39;macbook pro 2022&#39;: 1600,
+    &#39;macbook 2020&#39;: 1400,
+    &#39;macbook 2021&#39;: 1500,
+    &#39;macbook 2022&#39;: 1600
+    }
+
+headers = {
+    &#34;authority&#34;:&#34;api.reallypopularnzmarketplace.co.nz&#34;,
+    &#34;origin&#34;: &#34;https://www.reallypopularnzmarketplace.co.nz&#34;,
+    &#34;referer&#34;: &#34;https://www.reallypopularnzmarketplace.co.nz/&#34;,
+    &#34;user-agent&#34;: &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36&#34;
+    }
+
+def extract_date_int(date_string):
+    return int(&#39;&#39;.join(filter(str.isdigit, date_string)))
+
+def set_params(search_string, price_max, rows, conoical_path, page):
+    params = {
+    &#34;search_string&#34;:search_string,
+    &#34;rows&#34;: rows,
+    &#34;canonical_path&#34;: conoical_path,
+    &#34;return_variants&#34;: &#34;true&#34;,
+    &#34;page&#34;: page,
+    &#34;price_max&#34;: price_max,
+    &#34;buy&#34;: &#34;buynow&#34;,
+    &#34;sort_order&#34;: &#34;expirydesc&#34;
+    }
+    return params
+
+def search_listings(params):
+    response = requests.get(url=url, headers=headers, params=params)
+    if response.status_code != 200:
+        print(response)
+        return 1, False, []
+    response = response.json()
+    page = response[&#39;Page&#39;] + 1
+    total_count = response[&#39;TotalCount&#39;]
+    page_size = response[&#39;PageSize&#39;]
+    listings = response[&#34;List&#34;]
+
+    has_next = page_size*page &lt; total_count
+
+    return page, has_next, listings
+
+def date1_after_date2(date1: datetime, date2: datetime):
+    return date1.replace(second=0, microsecond=0) &gt; date2.replace(second=0, microsecond=0)
+
+def is_list_in_listing(list, listing):
+    for l in listing:
+        if l[&#39;ListingId&#39;] == list[&#39;ListingId&#39;]:
+            return True
+    return False
+
+def id_in_ids(id, ids):
+    for i in ids:
+        if i == id:
+            return True
+    return False
+
+def send_notification(chat_id, title, price, link):
+    message = f&#39;{title} \n\n**${price}** \n{link}&#39;
+    telegram_bot.send_message(chat_id=chat_id, text=message)
+    print(f&#39;sent message {message}&#39;)
+
+def get_datetime_from_string(date_string):
+    return datetime.fromtimestamp(extract_date_int(date_string) / 1e3)
+
+def detect_false_positive(listing, max_buy):
+    return listing[&#39;BuyNowPrice&#39;] &gt; max_buy
+
+def get_link(listing):
+    return f&#34;{base_link_url}{listing[&#39;CategoryPath&#39;]}/{listing[&#39;ListingId&#39;]}&#34;
+
+def clean_room(room: list, max_dirty: int):
+    if len(room) &gt; max_dirty:
+        print(f&#39;{datetime.now()} rooms dirty got to clean it!&#39;)
+        for i in range(5):
+            room.pop(0)
+def main():
+    sniped_listings_ids = []
+    scan_previous_timestamp = datetime.now()
+    sleep_time = timedelta(minutes=3)
+    while True:
+        print(f&#39;{datetime.now()} started searching&#39;)
+        scan_started_timestamp = datetime.now()
+        for search_string, max_buy in search_configuration.items():
+            page = 1
+            has_next = True
+            #print(f&#39;{datetime.now()} searching for &#34;{search_string}&#34;&#39;)
+            while has_next:
+                try:
+                    page, has_next, listings = search_listings(params=set_params(search_string, max_buy, 150, apple_laptop_canonical, page))
+                    for listing in listings:
+                        started_date = get_datetime_from_string(listing[&#39;StartDate&#39;])
+                        if (date1_after_date2(started_date, (scan_previous_timestamp-sleep_time))
+                        and not id_in_ids(listing[&#39;ListingId&#39;], sniped_listings_ids)
+                        and not detect_false_positive(listing, max_buy)):
+                            send_notification(telegram_chat_id, listing[&#39;Title&#39;], listing[&#39;BuyNowPrice&#39;], get_link(listing))
+                            sniped_listings_ids.append(listing[&#39;ListingId&#39;])
+                except HTTPError as http_err:
+                    telegram_bot.send_message(chat_id=telegram_chat_id, text= &#39;Http error occurred&#39;)
+                    print(traceback.format_exc())
+                    quit()
+
+                except Exception as err:
+                    telegram_bot.send_message(chat_id=telegram_chat_id, text = &#39;An error occurred&#39;)
+                    print(traceback.format_exc())
+                    quit()
+
+        scan_previous_timestamp = scan_started_timestamp
+        clean_room(sniped_listings_ids, 100)
+        #print(f&#39;{datetime.now()} sleeping for {sleep_time}&#39;)
+        sleep(sleep_time.seconds)
+
+
+if __name__ == &#34;__main__&#34;:
+    main()
+</code></pre>
   </main>
+  <div id="disqus-container">
+  
+</div>
+
 
           
             <footer role="contentinfo">

@@ -40,5 +40,15 @@ The script does the following steps repeatedly until interrupted:
 For each search string in the search_configuration dictionary, it performs a search request with given parameters: search_string, max_buy, number of rows, the canonical path, and page number.</description>
     </item>
     
+    <item>
+      <title>Golang Design Principles for the Chaotic Mind</title>
+      <link>https://fluorescentoast.github.io/golang-design-principles-for-the-chaotic-mind/</link>
+      <pubDate>Fri, 18 Sep 2020 09:47:48 +1300</pubDate>
+      
+      <guid>https://fluorescentoast.github.io/golang-design-principles-for-the-chaotic-mind/</guid>
+      <description>Go, or Golang, is one of my favourite languages. Whilst using it at my first job I quickly fell in love. Go&amp;rsquo;s simplicity, readability, and usability make it an ideal choice for programmers with a chaotic mind, as it allowed me to focus on the problem I was trying to solve without getting bogged down in the details.
+Simplicity is one of the core design principles stated by Rob Pike.</description>
+    </item>
+    
   </channel>
 </rss>

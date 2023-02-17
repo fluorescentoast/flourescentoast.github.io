@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Golang Design Principles for the Chaotic Mind | Devlog</title>
+  <link rel = 'canonical' href = 'https://fluorescentoast.github.io/golang-design-principles-for-the-chaotic-mind/'>
+  <meta name="description" content="Development Journal">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Golang Design Principles for the Chaotic Mind" />
+<meta property="og:description" content="Go, or Golang, is one of my favourite languages. Whilst using it at my first job I quickly fell in love. Go&rsquo;s simplicity, readability, and usability make it an ideal choice for programmers with a chaotic mind, as it allowed me to focus on the problem I was trying to solve without getting bogged down in the details.
+Simplicity is one of the core design principles stated by Rob Pike." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fluorescentoast.github.io/golang-design-principles-for-the-chaotic-mind/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-18T09:47:48+13:00" />
+<meta property="article:modified_time" content="2020-09-18T09:47:48+13:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang Design Principles for the Chaotic Mind"/>
+<meta name="twitter:description" content="Go, or Golang, is one of my favourite languages. Whilst using it at my first job I quickly fell in love. Go&rsquo;s simplicity, readability, and usability make it an ideal choice for programmers with a chaotic mind, as it allowed me to focus on the problem I was trying to solve without getting bogged down in the details.
+Simplicity is one of the core design principles stated by Rob Pike."/>
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fluorescentoast.github.io/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://fluorescentoast.github.io/images/favicon.ico" />
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://fluorescentoast.github.io/">
+  
+    <div id="logo" style="background-image: url(https://fluorescentoast.github.io/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Devlog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <p><img src="/images/goher.jpg?width=50pc" alt="gopher">
+Go, or Golang, is one of my favourite languages. Whilst using it at my first job I quickly fell in love. Go&rsquo;s simplicity, readability, and usability make it an ideal choice for programmers with a chaotic mind, as it allowed me to focus on the problem I was trying to solve without getting bogged down in the details.</p>
+<p>Simplicity is one of the core design principles stated by Rob Pike. For example the language has a straightforward syntax, a straight forward approach to error handling and the Go standard library is simple and easy to use. This simplicity made it easy for me to write code quickly without having to worry about if I&rsquo;m doing it wrong. Go&rsquo;s simplicity also makes it easier to identify and fix errors.</p>
+<p>Readability is another design principle of Go. Readability is a big one for me too. If the code is easy to read and understand, even for programmers who are not familiar with the language 💋. I found that Go&rsquo;s simple and consistent syntax as well as it&rsquo;s strong emphasis on code formatting and style contributes to its readability.</p>
+<p>Usability is the final principle that the creators of Go implemented that resonates with me. I found Go simple and very easy to use, this is because Go is designed to be a practical language that can be used to build large-scale, complex applications ( while renaming simply in its nature). Go has built-in support for concurrency and garbage collection, which makes it easier to write programs that are efficient and effective.</p>
+<p>In conclusion, Go&rsquo;s simplicity, readability, and usability was what made me love it as a fresh uni grad. These principles allowed me to focus on the problem I was trying to solve, collaborate effectively with team members, and write code that is easy to maintain.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2023  Devlog 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

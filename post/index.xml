@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Feb 2023 13:22:59 +1300</lastBuildDate><atom:link href="https://fluorescentoast.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Apr 2023 18:48:00 +1300</lastBuildDate><atom:link href="https://fluorescentoast.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automating TikTok Video to YouTube Shorts Without Watermark</title>
+      <link>https://fluorescentoast.github.io/automate-tiktok-to-youtube/</link>
+      <pubDate>Thu, 06 Apr 2023 18:48:00 +1300</pubDate>
+      
+      <guid>https://fluorescentoast.github.io/automate-tiktok-to-youtube/</guid>
+      <description>in recent years, TikTok has become one of the most popular social media platforms. Many people are creating engaging short-form videos on TikTok, and some are even making money from it. Meanwhile, YouTube Shorts has emerged as a new contender in the short-form video space. However, uploading TikTok videos to YouTube Shorts requires a manual and time-consuming process. In this blog post, we will discuss how we can automate this process and upload TikTok videos to YouTube Shorts without the watermark.</description>
+    </item>
+    
     <item>
       <title>New York Session Times With Pine Script</title>
       <link>https://fluorescentoast.github.io/new-york-session-times-with-pine-script/</link>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Forwarding Messages From Discord to Telegram | Devlog</title>
+  <link rel = 'canonical' href = 'https://fluorescentoast.github.io/forwarding-messages-from-discord-to-telegram/'>
+  <meta name="description" content="Development Journal">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Forwarding Messages From Discord to Telegram" />
+<meta property="og:description" content="Forwarding Messages from Discord to Telegram In this tutorial, we will create a Python script that forwards messages from a Discord channel to a Telegram chat. We will be using the Discord and Telegram APIs to achieve this. why? because my phone doesn&rsquo;t get discord push notifications.
+Prerequisites To follow along with this tutorial, you will need the following:
+A Discord bot token (taken from local storage) A Telegram bot token Python 3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fluorescentoast.github.io/forwarding-messages-from-discord-to-telegram/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-04-18T17:19:26+12:00" />
+<meta property="article:modified_time" content="2023-04-18T17:19:26+12:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Forwarding Messages From Discord to Telegram"/>
+<meta name="twitter:description" content="Forwarding Messages from Discord to Telegram In this tutorial, we will create a Python script that forwards messages from a Discord channel to a Telegram chat. We will be using the Discord and Telegram APIs to achieve this. why? because my phone doesn&rsquo;t get discord push notifications.
+Prerequisites To follow along with this tutorial, you will need the following:
+A Discord bot token (taken from local storage) A Telegram bot token Python 3."/>
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fluorescentoast.github.io/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://fluorescentoast.github.io/images/favicon.ico" />
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://fluorescentoast.github.io/">
+  
+    <div id="logo" style="background-image: url(https://fluorescentoast.github.io/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Devlog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="forwarding-messages-from-discord-to-telegram">Forwarding Messages from Discord to Telegram</h2>
+<p>In this tutorial, we will create a Python script that forwards messages from a Discord channel to a Telegram chat. We will be using the Discord and Telegram APIs to achieve this. why? because my phone doesn&rsquo;t get discord push notifications.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>To follow along with this tutorial, you will need the following:</p>
+<ul>
+<li>A Discord bot token (taken from local storage)</li>
+<li>A Telegram bot token</li>
+<li>Python 3.x</li>
+<li>discord and python-telegram-bot libraries</li>
+</ul>
+<h3 id="setting-up-the-discord-bot">Setting up the Discord Bot</h3>
+<p>First, we need to login to Discord and retrieve its token. To do this, follow the steps below:</p>
+<p>you can find you token in the local storage using chrome developer tools.</p>
+<h3 id="setting-up-the-telegram-bot">Setting up the Telegram Bot</h3>
+<p>Next, we need to create a Telegram bot and retrieve its token. To do this, follow the steps below:</p>
+<ol>
+<li>Open the Telegram app and search for the &ldquo;BotFather&rdquo; bot.</li>
+<li>Start a chat with the BotFather and type /newbot.</li>
+<li>Follow the prompts to create a new bot and retrieve its token.</li>
+</ol>
+<h3 id="installing-required-libraries">Installing Required Libraries</h3>
+<p>We need to install two libraries: discord.py-self and python-telegram-bot. To do this, run the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install discord.py-self python-telegram-bot
+</span></span></code></pre></div><h3 id="writing-the-code">Writing the Code</h3>
+<p>Create a new Python file and copy the following code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> discord
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> discord.ext <span style="color:#f92672">import</span> tasks
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> telegram
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> telegram <span style="color:#f92672">import</span> constants
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> emojis
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>telegram_token <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your-telegram-token&#34;</span>
+</span></span><span style="display:flex;"><span>discord_token <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your-discord-token&#34;</span>
+</span></span><span style="display:flex;"><span>t_bot <span style="color:#f92672">=</span> telegram<span style="color:#f92672">.</span>Bot(token<span style="color:#f92672">=</span>telegram_token)
+</span></span><span style="display:flex;"><span>telegram_chat_id <span style="color:#f92672">=</span> chatid
+</span></span><span style="display:flex;"><span>message_queue <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClient</span>(discord<span style="color:#f92672">.</span>Client):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_ready</span>(self):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Logged on as&#39;</span>, self<span style="color:#f92672">.</span>user)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>poller<span style="color:#f92672">.</span>is_running():
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>poller<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#39;Started polling...&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_message</span>(self, message):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (message<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;target channel&#39;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (message<span style="color:#f92672">.</span>content <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;&#39;</span>):
+</span></span><span style="display:flex;"><span>                    encoded_message <span style="color:#f92672">=</span> emojis<span style="color:#f92672">.</span>encode(message<span style="color:#f92672">.</span>content)
+</span></span><span style="display:flex;"><span>                    message_queue<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#39;message&#39;</span> : encoded_message,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#39;is_message&#39;</span>: <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>                    })
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> len(message<span style="color:#f92672">.</span>attachments) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> attachment <span style="color:#f92672">in</span> message<span style="color:#f92672">.</span>attachments:
+</span></span><span style="display:flex;"><span>                    message_queue<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#39;attachment&#39;</span> : attachment<span style="color:#f92672">.</span>url,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#39;is_message&#39;</span>: <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>                    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@tasks.loop</span>(seconds<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">poller</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>             <span style="color:#66d9ef">if</span> len(message_queue) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;is_message&#39;</span>]):
+</span></span><span style="display:flex;"><span>                        message <span style="color:#f92672">=</span> message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;message&#39;</span>]
+</span></span><span style="display:flex;"><span>                        t_bot<span style="color:#f92672">.</span>send_message(chat_id<span style="color:#f92672">=</span>telegram_chat_id, text<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&lt;b&gt;[Daxx]&lt;/b&gt; </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> &#39;</span><span style="color:#f92672">+</span>message, parse_mode<span style="color:#f92672">=</span>constants<span style="color:#f92672">.</span>PARSEMODE_HTML)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                        t_bot<span style="color:#f92672">.</span>send_photo(chat_id<span style="color:#f92672">=</span>telegram_chat_id, photo<span style="color:#f92672">=</span>message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;attachment&#39;</span>])
+</span></span><span style="display:flex;"><span>                    message_queue<span style="color:#f92672">.</span>pop(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                    print(e)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#f92672">=</span> MyClient()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Starting Bot...&#34;</span>)
+</span></span><span style="display:flex;"><span>client<span style="color:#f92672">.</span>run(discord_token)
+</span></span></code></pre></div><h3 id="understanding-the-code">Understanding the Code</h3>
+<p>The code consists of three main parts: setting up the Discord client, setting up the Telegram bot, and the main event loop.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClient</span>(discord<span style="color:#f92672">.</span>Client):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_ready</span>(self):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Logged on as&#39;</span>, self<span style="color:#f92672">.</span>user)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>poller<span style="color:#f92672">.</span>is_running():
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>poller<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#39;Started polling...&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span>
+</span></span></code></pre></div><p>The MyClient class extends the discord.Client class and overrides two of its methods: on_ready and on_message.</p>
+<p>The on_ready method is called when the bot has successfully connected to Discord. It prints a message to the console and starts the event loop if it isn&rsquo;t already running.</p>
+<p>The on_message method is called whenever a message is sent in a Discord channel. We check if the message was sent in a specific channel (&rsquo;target channel&rsquo;) and add it to the message queue.</p>
+<p>Telegram Bot</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>telegram_token <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your-telegram-token&#34;</span>
+</span></span><span style="display:flex;"><span>t_bot <span style="color:#f92672">=</span> telegram<span style="color:#f92672">.</span>Bot(token<span style="color:#f92672">=</span>telegram_token)
+</span></span><span style="display:flex;"><span>telegram_chat_id <span style="color:#f92672">=</span> chatid
+</span></span></code></pre></div><p>We set up the Telegram bot by creating a telegram.Bot instance with the bot token and setting the telegram_chat_id variable to the ID of the chat we want to forward messages to.</p>
+<p>Main Event Loop</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>message_queue <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@tasks.loop</span>(seconds<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">poller</span>(self):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> len(message_queue) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;is_message&#39;</span>]):
+</span></span><span style="display:flex;"><span>                    message <span style="color:#f92672">=</span> message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;message&#39;</span>]
+</span></span><span style="display:flex;"><span>                    t_bot<span style="color:#f92672">.</span>send_message(chat_id<span style="color:#f92672">=</span>telegram_chat_id, text<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&lt;b&gt;[Daxx]&lt;/b&gt; </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> &#39;</span><span style="color:#f92672">+</span>message, parse_mode<span style="color:#f92672">=</span>constants<span style="color:#f92672">.</span>PARSEMODE_HTML)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    t_bot<span style="color:#f92672">.</span>send_photo(chat_id<span style="color:#f92672">=</span>telegram_chat_id, photo<span style="color:#f92672">=</span>message_queue[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;attachment&#39;</span>])
+</span></span><span style="display:flex;"><span>                message_queue<span style="color:#f92672">.</span>pop(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                print(e)
+</span></span></code></pre></div><p>The poller function is a loop that runs every 10 seconds and checks the message_queue for new messages to forward. We limit it to 5 iterations per run to avoid rate limits.</p>
+<p>If there are messages in the queue, we try to forward them to the Telegram chat. If the message is a text message, we encode it using the emojis library, add a prefix to the message, and send it as HTML. If the message is a photo, we simply send the photo.</p>
+<p>Conclusion
+In this tutorial, we learned how to forward messages from a Discord channel to a Telegram chat using Python. We used the discord and python-telegram-bot libraries to interact with the Discord and Telegram APIs, respectively. We also created a message queue to avoid rate limits and used the emojis library to encode text messages with emojis.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2023  Devlog 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
